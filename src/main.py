@@ -40,7 +40,7 @@ def get_options():
 
     parser.add_argument('--download-neologd', action='store_true',
                         default=False)
-    parser.add_argument('--dictionary-path', default='output/dic')
+    parser.add_argument('--dictionary-path', default=None)
 
     args = parser.parse_args()
     return vars(args)
@@ -60,6 +60,8 @@ def main():
 
     dic_path = options['dictionary_path']
     if options['download_neologd']:
+        if dic_path is None:
+            dic_path = 'output/dic'
         tokenizer.download_neologd(dic_path)
 
     wikipedia_dump_path = options['wikipedia_dump_path']

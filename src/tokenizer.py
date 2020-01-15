@@ -22,6 +22,8 @@ def download_neologd(dic_path):
 
 
 def get_tagger(dic_path):
+    if dic_path is None:
+        return MeCab.Tagger()
     return MeCab.Tagger('-d {}'.format(dic_path))
 
 
