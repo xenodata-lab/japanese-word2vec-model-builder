@@ -22,3 +22,4 @@ def build_gensim_w2v_model(model_path, iter_tokens, size, window, min_count):
     model.train(iter_tokens(), total_examples=model.corpus_count, epochs=model.epochs)
     model.init_sims(replace=True)
     model.save(model_path)
+    model.wv.save_word2vec_format(model_path + '.bin', binary=True)

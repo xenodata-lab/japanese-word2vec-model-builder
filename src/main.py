@@ -5,6 +5,7 @@ import tempfile
 import tokenizer
 import wikipedia
 import word2vec
+import csvdataset
 
 
 __jawiki_dump_file_name = 'jawiki-latest-pages-articles.xml.bz2'
@@ -38,6 +39,8 @@ def get_options():
                         default='output/{}'.format(__jawiki_dump_file_name))
     parser.add_argument('--wikipedia-dump-url', default=__jawiki_dump_url)
 
+    parser.add_argument('--csv-dataset-path', default=None)
+
     parser.add_argument('--download-neologd', action='store_true',
                         default=False)
     parser.add_argument('--dictionary-path', default=None)
@@ -69,14 +72,15 @@ def main():
     if options['download_wikipedia_dump']:
         wikipedia.download_dump(wikipedia_dump_path, wikipedia_dump_url)
 
+    csv_dataset_path = options['csv_dataset_path']
+
     output_model_path = options['output_model_path']
     size = options['size']
     window = options['window']
     min_count = options['min_count']
     if options['build_gensim_model']:
         with tempfile.TemporaryDirectory() as temp_dir:
-            iter_docs = partial(wikipedia.iter_docs,
-                                wikipedia_dump_path, temp_dir)
+            iter_docs = partial(csvdataset.iter_docs, csv_dataset_path, temp_dir)
             iter_tokens = get_tokens_iterator(tokenizer.get_tagger(dic_path),
                                               iter_docs)
             word2vec.build_gensim_w2v_model(output_model_path, iter_tokens,
