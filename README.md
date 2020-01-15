@@ -6,23 +6,6 @@ A tool for building gensim word2vec model for Japanese.
 It uses MeCab for tokenization with mecab-ipadic-NEologd as a dictionary.
 Wikipedia is used as a corpus for training word2vec model.
 
-Trained model
--------------
-
-A trained word2vec model is available at:
-
-http://public.shiroyagi.s3.amazonaws.com/latest-ja-word2vec-gensim-model.zip
-
-Parameters used for training this model are `size=50, window=8, min_count=20`.
-
-
-Requirements
-------------
-
-+ cURL
-+ MeCab == 0.996
-+ Python >= 3.4
-
 Setup
 -----
 
@@ -36,13 +19,14 @@ Run
 An example to build a model at the default path. (output/word2vec.gensim.model)
 
 ```
-./build --build-gensim-model
+./build --download-neologd --csv-dataset-path CSV_DIR --build-gensim-model
 ```
 
 Another example to specify hyper parameters.
 
 ```
-./build -o output/another.model --build-gensim-model --size=50 --window=10 --min-count=5
+./build --download-neologd --csv-dataset-path CSV_DIR --build-gensim-model \
+    -o output/another.model --size=50 --window=10 --min-count=5
 ```
 
 How to use the model
